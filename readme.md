@@ -1,0 +1,3 @@
+1) null vs undefined
+undefined: This is like a mistake. It means you made a variable but forgot to put anything in it. You have a box, but it’s totally empty and you haven't even named what should go inside.
+null: This is on purpose. It’s like you have a box and you specifically put a label on it that says "Empty." You are telling the computer: "I know this exists, but right now, there is nothing in it."
