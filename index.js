@@ -233,8 +233,89 @@ const handleCategoryActive=(clicked)=>{
       clicked.classList.add('bg-blue-600', 'text-white');
 }
 
+// load 3 popular products 
+loadPopularPorducts=async()=>{
+const url='https://fakestoreapi.com/products'
+const res=await fetch(url)
+const data=await res.json()
+
+// sort popular usig raitng count
+
+const sortPopular=data.sort((a,b)=>{
+    b.rating.count-a.rating.count
+} )
+
+const topProduct=sortPopular.slice(0,6)
+// console.log(topProduct);
+
+displayPopularProducts(topProduct);
+
+}
+
+const displayPopularProducts=(products)=>{
+    const popularProductContainer=document.getElementById('popular_products')
+products.forEach(card=>{
+    popularProductContainer.innerHTML+=`
+        <!-- Main Card Container -->
+<div class="max-w-[280px] bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300">
+  
+  <!-- Image Area (Light background) -->
+  <div class="bg-slate-100 aspect-square flex items-center justify-center p-8">
+    <img 
+      src="${card.image}" 
+      alt="Product" 
+      class="max-h-full object-contain mix-blend-multiply"
+    />
+  </div>
+
+  <!-- Card Body -->
+  <div class="p-4">
+    
+    <!-- Top Row: Category & Rating -->
+    <div class="flex items-center justify-between mb-3">
+      <span class="bg-indigo-50 text-indigo-600 text-xs font-bold p-2 rounded-full uppercase tracking-wider">
+    ${card.category}
+      </span>
+      <div class="flex items-center gap-1 text-gray-400 text-xs">
+        <i class="fa-solid fa-star text-yellow-400"></i>
+        <span>${card.rating.rate}(${card.rating.count})</span>
+      </div>
+    </div>
+
+    <!-- Title & Price -->
+    <h3 class="text-slate-800 font-semibold text-base truncate mb-1" title="Fjallraven - Foldsack No. 1...">
+     ${card.title}
+    </h3>
+    <p class="text-slate-900 font-extrabold text-xl mb-4">
+      $${card.price}
+    </p>
+
+    <!-- Action Buttons -->
+    <div class="flex gap-2">
+      <!-- Details Button -->
+      <button onclick="loadCardModal(${card.id})" class="flex-1 flex items-center justify-center gap-2 border border-gray-200 py-2.5 rounded-xl text-slate-700 font-semibold text-sm hover:bg-gray-50 transition-colors">
+        <i class="fa-regular fa-eye text-xs"></i>
+        Details
+      </button>
+      
+      <!-- Add Button -->
+      <button class="flex-1 flex items-center justify-center gap-2 bg-[#5842ff] py-2.5 rounded-xl text-white font-semibold text-sm hover:bg-indigo-700 transition-colors shadow-lg shadow-indigo-100">
+        <i class="fa-solid fa-cart-shopping text-xs"></i>
+        Add
+      </button>
+    </div>
+
+  </div>
+</div>
+
+`
+
+})
+}
+
 handleNavbarActive();
 
+loadPopularPorducts()
 
 loadAllProducts()
 loadAllCategories()
