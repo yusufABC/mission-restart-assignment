@@ -16,6 +16,8 @@ fetch(categoryUrl)
 
 }
 
+
+
 const showAllCategory=(data)=>{
     console.log(data);
 
@@ -27,11 +29,26 @@ categoryContainer.innerHTML=''
 
         btn.className = "btn rounded-2xl capitalize";
         btn.innerText = category;
+
+         btn.onclick = () => loadCategoryProducts(category);
         
         categoryContainer.appendChild(btn);
     });
     
 }
+
+const loadCategoryProducts=async(category)=>{
+const url=`https://fakestoreapi.com/products/category/${category}`
+const res=await fetch(url)
+const data=await res.json()
+showAllProducts(data)
+
+
+
+}
+
+
+
 
 const loadCardModal=async(id)=>{
 const url=`https://fakestoreapi.com/products/${id}`
