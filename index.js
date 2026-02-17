@@ -11,7 +11,13 @@ fetch(url)
 const loadAllCategories=()=>{
 fetch(categoryUrl)
 .then(res=>res.json())
-.then(data=>showAllCategory(data)
+.then(data=>{
+    showAllCategory(data)
+
+     const allBtn = document.getElementById('all-btn');
+            if (allBtn) handleCategoryActive(allBtn);
+
+}
 )
 
 }
@@ -30,7 +36,9 @@ categoryContainer.innerHTML=''
         btn.className = "btn rounded-2xl capitalize";
         btn.innerText = category;
 
-         btn.onclick = () => loadCategoryProducts(category);
+         btn.onclick = () => {
+            handleCategoryActive(btn)
+            loadCategoryProducts(category)};
         
         categoryContainer.appendChild(btn);
     });
@@ -194,6 +202,39 @@ productCard.innerHTML+=cardHtml
 
 
 }
+
+
+const handleNavbarActive = () => {
+    const navLinks = document.querySelectorAll('.navbar-center a, .menu-sm a');
+    const currentPath = window.location.pathname;
+
+    navLinks.forEach(link => {
+        const linkPath = link.getAttribute('href');
+        
+        link.classList.remove('bg-blue-600', 'text-white', 'rounded-lg');
+
+        if ((currentPath === "/" || currentPath.endsWith("index.html")) && linkPath === "/") {
+            link.classList.add('bg-blue-600', 'text-white', 'rounded-lg', 'px-4', 'py-2');
+        } 
+        else if (currentPath.endsWith(linkPath) && linkPath !== "/") {
+            link.classList.add('bg-blue-600', 'text-white', 'rounded-lg', 'px-4', 'py-2');
+        }
+    });
+}
+
+
+
+const handleCategoryActive=(clicked)=>{
+    const allBtns=document.querySelectorAll('#category-container button')
+     allBtns.forEach(btn => {
+        btn.classList.remove('bg-blue-600', 'text-white');
+    });
+
+      clicked.classList.add('bg-blue-600', 'text-white');
+}
+
+handleNavbarActive();
+
 
 loadAllProducts()
 loadAllCategories()

@@ -114,7 +114,7 @@
             Our Products
         </h2>
 <div id="category-container" class="flex flex-wrap justify-center gap-4 my-8">
-    <button onclick="loadAllProducts()" class="btn rounded-2xl">All</button>
+    <button id="all-btn" onclick="loadAllProducts();  handleCategoryActive(this)" class="btn rounded-2xl">All</button>
     <div id="dynamic-categories" class="flex gap-4"></div>
 </div>
     </section>
